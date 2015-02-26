@@ -2,11 +2,14 @@ game = {}
 game.path = ... .. '/'
 
 game.playername = "Untitled Player"
+game.selected = ""
 
 function game.load()
 
 	game.board = engine.scripts.require("board")
 	game.selector = engine.scripts.require("selector")
+
+	engine.map.loadmap("chess")
 
 	-- Set default state --
 	engine.state.setState("splash")
@@ -19,7 +22,7 @@ function game.load()
 	engine.panel.addVar("FPS", function() return _G.fps end)
 	engine.panel.addVar("MouseX", function() return engine.camera:getMouseX() end)
 	engine.panel.addVar("MouseY", function() return engine.camera:getMouseY() end)
-	--engine.input.mouse.bind("l", "click")
+	engine.panel.addVar("Selected", function() return game.selected end)
 
 	-- Menu Buttons --
 	engine.menu.addButton("Start", 0, 0, function() engine.state.setState("game") end)
@@ -74,7 +77,18 @@ function game.update(dt)
 			engine.camera:move("up", 100 * dt)
 		end
 
-		game.selector.setTile(math.floor(engine.camera:getMouseX() / 64), math.floor(engine.camera:getMouseY() / 64))
+	end
+
+end
+
+function game.mousepressed(x, y, button)
+
+	if button == "l" then
+		local mx = math.floor(engine.camera:getMouseX() / 64)
+		local my = math.floor(engine.camera:getMouseY() / 64)
+
+		game.selector.setTile(mx, my)
+		game.selected = game.board.toCoords(mx, my)
 
 	end
 

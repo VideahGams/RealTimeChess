@@ -66,6 +66,7 @@ end
 function love.mousepressed(x, y, button)
 
 	engine.mousepressed(x, y, button)
+	game.mousepressed(x, y, button)
 
 end
  
