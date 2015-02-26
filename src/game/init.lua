@@ -17,6 +17,8 @@ function game.load()
 
 	-- Debug Vars --
 	engine.panel.addVar("FPS", function() return _G.fps end)
+	engine.panel.addVar("MouseX", function() return engine.camera:getMouseX() end)
+	engine.panel.addVar("MouseY", function() return engine.camera:getMouseY() end)
 	--engine.input.mouse.bind("l", "click")
 
 	-- Menu Buttons --
@@ -71,6 +73,8 @@ function game.update(dt)
 		if love.keyboard.isDown("up") then
 			engine.camera:move("up", 100 * dt)
 		end
+
+		game.selector.setTile(math.floor(engine.camera:getMouseX() / 64), math.floor(engine.camera:getMouseY() / 64))
 
 	end
 

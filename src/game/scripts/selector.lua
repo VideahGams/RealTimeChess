@@ -13,7 +13,7 @@ end
 
 function selector.setTile(x, y)
 
-	selector.x, selector.y = x * 64, y * 64)
+	selector.x, selector.y = x * 64, y * 64
 
 end
 
