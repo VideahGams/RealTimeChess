@@ -28,6 +28,8 @@ function game.load()
 	engine.menu.addButton("Start", 0, 0, function() engine.state.setState("game") end)
 	engine.menu.addButton("Quit", 0, 0, function() love.event.quit() end)
 
+	engine.scripts.require("pieces.base")
+
 end
 
 function game.draw()
@@ -83,12 +85,18 @@ end
 
 function game.mousepressed(x, y, button)
 
-	if button == "l" then
-		local mx = math.floor(engine.camera:getMouseX() / 64)
-		local my = math.floor(engine.camera:getMouseY() / 64)
+	if engine.state:isCurrentState("game") then
 
-		game.selector.setTile(mx, my)
-		game.selected = game.board.toCoords(mx, my)
+		if button == "l" then
+			local mx = math.floor(engine.camera:getMouseX() / 64)
+			local my = math.floor(engine.camera:getMouseY() / 64)
+
+			if mx <= 8 and mx >= 1 and my <= 8 and my >= 1 then
+				game.selector.setTile(mx, my)
+				game.selected = game.board.toCoords(mx, my)
+			end
+
+		end
 
 	end
 
